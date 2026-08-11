@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Raki 💝</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== INTRO SCREEN ===== */
+        #intro-screen {
+            text-align: center;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .intro-text {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .intro-sub {
+            font-size: 1.5rem;
+            color: #ffeaa7;
+            margin-bottom: 40px;
+        }
+
+        .click-btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+            transition: all 0.3s;
+            animation: bounce 2s infinite;
+        }
+
+        .click-btn:hover {
+            transform: scale(1.1);
+            background: #ff5252;
+        }
+
+        /* ===== NAME SCREEN ===== */
+        #name-screen {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        .name-box {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .name-box h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .name-box input {
+            padding: 15px 25px;
+            font-size: 1.3rem;
+            border: 3px solid #764ba2;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            outline: none;
+        }
+
+        .name-box button {
+            margin-top: 20px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .name-box button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        /* ===== BLACK SCREEN & ANIMATION ===== */
+        #black-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Hamster Container */
+        .hamster-scene {
+            position: relative;
+            width: 100%;
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Cute Hamster CSS Art */
+        .hamster {
+            position: relative;
+            width: min(42vw, 280px);
+            height: min(42vw, 220px);
+            perspective: 700px;
+            animation: walkIn 4s ease-in-out forwards, bounceWalk 0.5s infinite;
+            opacity: 0;
+        }
+
+        .hamster-body {
+            width: 170px;
+            height: 125px;
+            background: radial-gradient(circle at 35% 25%, #f1c28e 0 18%, #d4a373 55%, #9c633c 100%);
+            border-radius: 52% 48% 45% 45%;
+            position: absolute;
+            bottom: 0;
+            left: 42px;
+            transform: rotateX(12deg);
+            box-shadow: inset -18px -12px 24px rgba(75, 38, 19, 0.28), 0 15px 18px rgba(0,0,0,0.45);
+        }
+
+        .hamster-head {
+            width: 125px;
+            height: 112px;
+            background: radial-gradient(circle at 35% 25%, #f5cc9a 0 16%, #d4a373 58%, #9c633c 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: -45px;
+            left: 65px;
+            z-index: 2;
+            box-shadow: inset -14px -10px 20px rgba(75, 38, 19, 0.25), 0 10px 16px rgba(0,0,0,0.4);
+        }
+
+        .ear {
+            width: 38px;
+            height: 38px;
+            background: radial-gradient(circle at 35% 25%, #f1c28e, #b8794b 75%);
+            border-radius: 50%;
+            position: absolute;
+            top: -18px;
+            box-shadow: inset -5px -4px 8px rgba(75, 38, 19, 0.3);
+        }
+
+        .ear.left { left: 8px; }
+        .ear.right { right: 8px; }
+
+        .ear-inner {
+            width: 22px;
+            height: 22px;
+            background: #ffb7b2;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+
+        .eye {
+            width: 16px;
+            height: 19px;
+            background: radial-gradient(circle at 35% 30%, #fff 0 12%, #171717 18% 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 34px;
+            animation: blink 3s infinite;
+        }
+
+        .eye.left { left: 27px; }
+        .eye.right { right: 27px; }
+
+        .eye-shine {
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            right: 2px;
+        }
+
+        .nose {
+            width: 14px;
+            height: 11px;
+            background: radial-gradient(circle at 35% 25%, #ffb0a8, #d95757);
+            border-radius: 50%;
+            position: absolute;
+            top: 61px;
+            left: 55px;
+        }
+
+        .mouth {
+            width: 28px;
+            height: 14px;
+            border-bottom: 4px solid #a33d3d;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 72px;
+            left: 48px;
+        }
+
+        .cheek {
+            width: 25px;
+            height: 16px;
+            background: #ffb7b2;
+            border-radius: 50%;
+            position: absolute;
+            top: 59px;
+            opacity: 0.6;
+        }
+
+        .cheek.left { left: 10px; }
+        .cheek.right { right: 10px; }
+
+        .paw {
+            width: 31px;
+            height: 22px;
+            background: radial-gradient(circle at 35% 25%, #f1c28e, #b8794b 80%);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 12px;
+        }
+
+        .paw.left { left: 58px; animation: pawMove 0.5s infinite; }
+        .paw.right { right: 58px; animation: pawMove 0.5s infinite 0.25s; }
+
+        .tail {
+            width: 34px;
+            height: 34px;
+            background: radial-gradient(circle at 35% 25%, #f1c28e, #9c633c 80%);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 22px;
+            right: 18px;
+            animation: tailWag 0.5s infinite;
+        }
+
+        /* Flower */
+        .flower {
+            position: absolute;
+            right: -55px;
+            top: -35px;
+            width: 90px;
+            height: 90px;
+            animation: flowerBounce 1s infinite;
+            opacity: 0;
+        }
+
+        .rose {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            transform: rotate(-12deg);
+        }
+
+        .rose-petal {
+            position: absolute;
+            width: 36px;
+            height: 46px;
+            background: radial-gradient(circle at 35% 25%, #ff9b9b, #d51f45 70%, #75152d);
+            border-radius: 70% 35% 70% 35%;
+            box-shadow: inset -5px -5px 8px rgba(75, 0, 20, 0.3), 0 3px 5px rgba(0,0,0,0.35);
+            transform-origin: 50% 90%;
+        }
+
+        .rose-petal:nth-child(1) { left: 18px; top: 2px; transform: rotate(0deg); }
+        .rose-petal:nth-child(2) { left: 3px; top: 18px; transform: rotate(-48deg); }
+        .rose-petal:nth-child(3) { right: 3px; top: 18px; transform: rotate(48deg); }
+        .rose-petal:nth-child(4) { left: 18px; bottom: 0; transform: rotate(180deg); }
+        .rose-petal:nth-child(5) { left: 19px; top: 17px; width: 34px; height: 38px; transform: rotate(24deg); }
+
+        .rose-center {
+            position: absolute;
+            left: 28px;
+            top: 25px;
+            width: 20px;
+            height: 25px;
+            border-radius: 50%;
+            background: #8d1833;
+            box-shadow: inset 3px 2px 5px rgba(255, 180, 180, 0.4);
+        }
+
+        .rose-stem {
+            position: absolute;
+            width: 7px;
+            height: 48px;
+            top: 58px;
+            left: 34px;
+            background: linear-gradient(90deg, #1c6b3b, #73b85c, #1c6b3b);
+            transform: rotate(10deg);
+            transform-origin: top;
+        }
+
+        .rose-leaf {
+            position: absolute;
+            width: 24px;
+            height: 13px;
+            top: 84px;
+            left: 12px;
+            border-radius: 100% 0;
+            background: #3a8b4d;
+            transform: rotate(-28deg);
+        }
+
+        .rose-leaf.right {
+            left: 42px;
+            transform: rotate(35deg) scaleX(-1);
+        }
+
+        .rose-petal,
+        .rose-center,
+        .rose-stem,
+        .rose-leaf {
+            pointer-events: none;
+        }
+
+        .flower.show { opacity: 1; }
+
+        /* Message */
+        .rakhi-message {
+            color: #fff;
+            font-size: 2.5rem;
+            text-align: center;
+            opacity: 0;
+            margin-top: 30px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .rakhi-message.show {
+            animation: fadeInUp 2s forwards;
+        }
+
+        /* Kiss Effect */
+        .kiss-mark {
+            position: absolute;
+            font-size: 50px;
+            opacity: 0;
+            top: -40px;
+            left: 35px;
+        }
+
+        .kiss-mark.show {
+            animation: kissPop 1.5s forwards;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 30px;
+            animation: floatUp 3s ease-in forwards;
+        }
+
+        /* ===== NEXT SURPRISE SCREEN ===== */
+        #next-surprise {
+            display: none;
+            text-align: center;
+            color: #fff;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        #next-surprise h2 {
+            color: #ffeaa7;
+            font-size: 2.4rem;
+            margin-bottom: 28px;
+        }
+
+        .next-btn {
+            padding: 18px 38px;
+            border: 2px solid #ffeaa7;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ff6b6b, #c44569);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 24px rgba(255, 234, 167, 0.45);
+            animation: pulse 1.8s infinite;
+        }
+
+        .next-btn:hover { transform: scale(1.06); }
+
+        /* ===== VIDEO SECTION ===== */
+        #video-section {
+            display: none;
+            width: min(92vw, 820px);
+            text-align: center;
+            color: white;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        #video-section h2 {
+            font-size: 2rem;
+            margin-bottom: 18px;
+            color: #ffeaa7;
+        }
+
+        #video-section.video-finished h2,
+        #video-section.video-finished > p,
+        #video-section.video-finished #video-preview,
+        #video-section.video-finished .upload-area {
+            display: none !important;
+        }
+
+        #video-preview {
+            display: block;
+            width: min(100%, 760px);
+            max-height: 62vh;
+            margin: 24px auto;
+            border: 6px solid #ffeaa7;
+            border-radius: 22px;
+            background: #090909;
+            box-shadow: 0 0 0 3px #ff6b6b, 0 0 28px #ff6b6b, 0 20px 60px rgba(0,0,0,0.6);
+            animation: videoGlow 2s ease-in-out infinite alternate;
+        }
+
+        .upload-area {
+            border: 2px dashed #ffeaa7;
+            border-radius: 14px;
+            padding: 20px;
+            margin: 18px auto;
+            max-width: 500px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-area:hover { background: rgba(255,255,255,0.1); }
+
+        #final-msg {
+            display: none;
+            margin-top: 24px;
+            font-size: 1.5rem;
+            color: #ffeaa7;
+        }
+
+        #bangarukonda-msg {
+            display: none;
+            margin-top: 28px;
+            color: #fff;
+            font-size: clamp(1.8rem, 5vw, 3.4rem);
+            font-weight: 800;
+            text-shadow: 0 0 12px #ff6b6b, 0 0 28px #ffeaa7;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        @keyframes walkIn {
+            0% { transform: translateX(-500px); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes bounceWalk {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes pawMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes flowerBounce {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        @keyframes kissPop {
+            0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+            50% { opacity: 1; transform: scale(1.5) rotate(0deg); }
+            100% { opacity: 0; transform: scale(1) rotate(0deg) translateY(-50px); }
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-300px) scale(1.5); }
+        }
+
+        @keyframes videoGlow {
+            from { box-shadow: 0 0 0 3px #ff6b6b, 0 0 22px #ff6b6b, 0 20px 60px rgba(0,0,0,0.6); }
+            to { box-shadow: 0 0 0 3px #ffeaa7, 0 0 34px #ffeaa7, 0 20px 60px rgba(0,0,0,0.6); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="intro-text">💖 Akka, Neeku Oka Surprise Undi! 💖</div>
+        <div class="intro-sub">Ee page click cheste nee kosam oka magic jaruguthundi...</div>
+        <button class="click-btn" onclick="showNameScreen()">✨ Click Here ✨</button>
+    </div>
+
+    <!-- NAME INPUT SCREEN -->
+    <div id="name-screen">
+        <div class="name-box">
+            <h2>🌸 Nee Peru Cheppava? 🌸</h2>
+            <input type="text" id="sisterName" placeholder="Akka peru type cheyyi..." maxlength="20">
+            <br>
+            <button onclick="startSurprise()">🎁 Surprise Open Cheyyi 🎁</button>
+        </div>
+    </div>
+
+    <!-- BLACK SCREEN WITH ANIMATION -->
+    <div id="black-screen">
+        <div class="hamster-scene">
+            <div class="hamster" id="hamster">
+                <div class="tail"></div>
+                <div class="hamster-body"></div>
+                <div class="hamster-head">
+                    <div class="ear left"><div class="ear-inner"></div></div>
+                    <div class="ear right"><div class="ear-inner"></div></div>
+                    <div class="eye left"><div class="eye-shine"></div></div>
+                    <div class="eye right"><div class="eye-shine"></div></div>
+                    <div class="nose"></div>
+                    <div class="mouth"></div>
+                    <div class="cheek left"></div>
+                    <div class="cheek right"></div>
+                </div>
+                <div class="paw left"></div>
+                <div class="paw right"></div>
+                <div class="flower" id="flower">
+                    <div class="rose" aria-label="3D red rose">
+                        <div class="rose-stem"></div>
+                        <div class="rose-leaf"></div>
+                        <div class="rose-leaf right"></div>
+                        <div class="rose-petal"></div>
+                        <div class="rose-petal"></div>
+                        <div class="rose-petal"></div>
+                        <div class="rose-petal"></div>
+                        <div class="rose-petal"></div>
+                        <div class="rose-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rakhi-message" id="rakhiMsg"></div>
+        <div class="hearts" id="hearts"></div>
+    </div>
+
+    <!-- NEXT SURPRISE SCREEN -->
+    <div id="next-surprise">
+        <h2>✨ Inko Surprise Ready Ga Undi! ✨</h2>
+        <button class="next-btn" onclick="openVideoSurprise()">🎬 Next Surprise</button>
+    </div>
+
+    <!-- VIDEO UPLOAD SECTION -->
+    <div id="video-section">
+        <h2>🎬 Nee Kosam Oka Special Video Kuda Undi!</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 20px; opacity: 0.9;">Mee special video ikkada play avutundi...</p>
+
+        <video id="video-preview" controls playsinline preload="metadata">
+            <source src="rakhi-video.mp4" type="video/mp4">
+            Mee browser video playback ni support cheyyadu.
+        </video>
+        
+        <div class="upload-area" onclick="document.getElementById('videoInput').click()">
+            <div style="font-size: 60px;">📁</div>
+            <p style="font-size: 1.3rem; margin-top: 10px;">Leda vere video select cheyyi</p>
+            <p style="opacity: 0.7; margin-top: 5px;">(MP4, WEBM, MOV)</p>
+        </div>
+        
+        <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+        
+        <div id="final-msg" style="display: none; margin-top: 30px; font-size: 1.5rem; color: #ffeaa7;">
+            💝 Happy Raksha Bandhan Akka! 💝<br>
+            <span style="font-size: 1rem; opacity: 0.8;">Nee Thammudu</span>
+        </div>
+
+        <div id="bangarukonda-msg">💖 You are my Bangarukonda 💖</div>
+    </div>
+
+    <script>
+        let sisterName = '';
+
+        function showNameScreen() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('name-screen').style.display = 'block';
+            document.getElementById('name-screen').style.animation = 'fadeIn 1s';
+        }
+
+        function startSurprise() {
+            sisterName = document.getElementById('sisterName').value.trim();
+            if (!sisterName) {
+                alert('Please akka peru enter cheyyi! ❤️');
+                return;
+            }
+
+            document.getElementById('name-screen').style.display = 'none';
+            document.getElementById('black-screen').style.display = 'flex';
+
+            // Play walking sound
+            playWalkingSound();
+
+            // Sequence of events
+            setTimeout(() => {
+                // Show flower after hamster arrives
+                document.getElementById('flower').classList.add('show');
+            }, 3000);
+
+            setTimeout(() => {
+                // Show message
+                const msg = document.getElementById('rakhiMsg');
+                msg.innerHTML = `🌹 Happy Raksha Bandhan 🌹<br><span style="color:#ffeaa7; font-size:3rem;">${sisterName} Akka!</span>`;
+                msg.classList.add('show');
+                
+                // Play Happy Raksha Bandhan tune
+                playRakhiTune();
+            }, 4500);
+
+            setTimeout(() => {
+                createHearts();
+            }, 6000);
+
+            setTimeout(() => {
+                document.getElementById('black-screen').style.display = 'none';
+                document.getElementById('next-surprise').style.display = 'block';
+            }, 10000);
+        }
+
+        function openVideoSurprise() {
+            const videoSection = document.getElementById('video-section');
+            const video = document.getElementById('video-preview');
+
+            document.getElementById('next-surprise').style.display = 'none';
+            videoSection.style.display = 'block';
+            document.body.style.background = 'linear-gradient(135deg, #2d3436 0%, #000000 100%)';
+            video.currentTime = 0;
+            video.play().catch(() => {
+                video.controls = true;
+            });
+        }
+
+        // Web Audio API for sound effects
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playKissSound() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+            osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.3);
+            
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.4);
+
+            // Second part of kiss
+            setTimeout(() => {
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.frequency.setValueAtTime(1000, audioCtx.currentTime);
+                gain2.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc2.start(audioCtx.currentTime);
+                osc2.stop(audioCtx.currentTime + 0.2);
+            }, 150);
+        }
+
+        function playWalkingSound() {
+            // Soft tapping sounds
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(200 + Math.random() * 100, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start(audioCtx.currentTime);
+                    osc.stop(audioCtx.currentTime + 0.1);
+                }, i * 500);
+            }
+        }
+
+        function playRakhiTune() {
+            // Simple festive tune
+            const notes = [523, 587, 659, 784, 659, 784, 880, 1047];
+            const times = [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1];
+            
+            notes.forEach((freq, i) => {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                    osc.type = 'sine';
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc.start(audioCtx.currentTime);
+                    osc.stop(audioCtx.currentTime + 0.4);
+                }, times[i] * 1000);
+            });
+        }
+
+        function createHearts() {
+            const container = document.getElementById('hearts');
+            container.style.display = 'block';
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = ['❤️', '💖', '💕', '💗', '💝'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.bottom = '0';
+                    heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                    container.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 200);
+            }
+        }
+
+        const videoDatabaseRequest = indexedDB.open('rakhi-surprise-db', 1);
+
+        videoDatabaseRequest.onupgradeneeded = function(event) {
+            event.target.result.createObjectStore('videos');
+        };
+
+        function saveVideo(file) {
+            return new Promise((resolve, reject) => {
+                const request = videoDatabaseRequest.result.transaction('videos', 'readwrite')
+                    .objectStore('videos')
+                    .put(file, 'surprise-video');
+                request.onsuccess = resolve;
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function loadSavedVideo() {
+            videoDatabaseRequest.onsuccess = function() {
+                const request = videoDatabaseRequest.result.transaction('videos', 'readonly')
+                    .objectStore('videos')
+                    .get('surprise-video');
+
+                request.onsuccess = function() {
+                    if (request.result) showVideo(request.result);
+                };
+            };
+        }
+
+        function showVideo(file) {
+            const video = document.getElementById('video-preview');
+            const url = URL.createObjectURL(file);
+            video.src = url;
+            video.style.display = 'block';
+        }
+
+        function handleVideoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            saveVideo(file)
+                .then(() => {
+                    showVideo(file);
+                    document.getElementById('video-preview').play().catch(() => {});
+                    playRakhiTune();
+                    createHearts();
+                })
+                .catch(() => alert('Video save cheyyadam lo problem vachindi. Vere small video try cheyyi.'));
+        }
+
+        loadSavedVideo();
+
+        document.getElementById('video-preview').addEventListener('ended', function() {
+            document.getElementById('video-section').classList.add('video-finished');
+            document.getElementById('final-msg').style.display = 'block';
+            document.getElementById('bangarukonda-msg').style.display = 'block';
+            createHearts();
+        });
+
+        // Enter key support
+        document.getElementById('sisterName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') startSurprise();
+        });
+    </script>
+</body>
+</html>
