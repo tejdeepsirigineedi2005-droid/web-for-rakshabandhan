@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Happy Raksha Bandhan</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background photo slideshow -->
+  <div id="bg-slides"></div>
+  <div id="overlay"></div>
+
+  <!-- Background music (starts after first click, browsers block autoplay before that) -->
+  <audio id="bgm" src="assets/audio/bg-music.mp3" loop></audio>
+
+  <!-- SCREEN 1 : Surprise reveal -->
+  <section id="screen1" class="screen active">
+    <div class="card">
+      <p class="glow-text">🎁 నీ కోసం ఒక సర్‌ప్రైజ్ ఉంది...</p>
+      <button id="btn-surprise" class="btn">Click చెయ్యి ✨</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2 : Ask name -->
+  <section id="screen2" class="screen">
+    <div class="card">
+      <p class="glow-text">నీ పేరు చెప్పు 😊</p>
+      <input type="text" id="nameInput" placeholder="మీ పేరు ఇక్కడ టైప్ చేయండి" />
+      <button id="btn-name" class="btn">Next ➡️</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3 : Black screen, hero walks in with rose, wish text -->
+  <section id="screen3" class="screen black-screen">
+    <div id="hero">
+      <svg viewBox="0 0 100 160" width="90" height="140">
+        <ellipse cx="50" cy="150" rx="22" ry="6" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="50" cy="24" r="16" fill="#c1121f"/>
+        <path d="M34 24 Q50 8 66 24 Q66 30 50 30 Q34 30 34 24Z" fill="#111"/>
+        <rect x="38" y="40" width="24" height="42" rx="8" fill="#c1121f"/>
+        <rect x="38" y="40" width="24" height="20" rx="6" fill="#1d3557"/>
+        <rect id="armL" x="20" y="42" width="16" height="10" rx="5" fill="#c1121f"/>
+        <rect id="armR" x="64" y="42" width="16" height="10" rx="5" fill="#c1121f"/>
+        <rect id="legL" x="40" y="80" width="9" height="40" rx="4" fill="#1d3557"/>
+        <rect id="legR" x="51" y="80" width="9" height="40" rx="4" fill="#1d3557"/>
+      </svg>
+    </div>
+    <div id="rose">🌹</div>
+    <h1 id="wishText"></h1>
+  </section>
+
+  <!-- SCREEN 4 : Last surprise - video with background photos -->
+  <section id="screen4" class="screen video-screen">
+    <video id="surpriseVideo" src="assets/vedio/surprise-video.mp4" playsinline></video>
+    <div class="card">
+      <p class="glow-text" id="lastSurpriseText">ఇది చివరి సర్‌ప్రైజ్... 🎉</p>
+    </div>
+  </section>
+
+  <!-- SCREEN 5 : Goodbye with video -->
+  <section id="screen5" class="screen">
+    <video id="byeVideo" src="assets/vedio/surprise-video.mp4" playsinline autoplay muted loop></video>
+    <div class="card">
+      <p class="glow-text" id="byeText">Bye re bujji kanna 🥰🎀</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
