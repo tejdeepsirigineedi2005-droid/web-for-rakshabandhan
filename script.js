@@ -99,7 +99,7 @@ function runHeroSequence() {
 
   // 3) wish text appears
   setTimeout(() => {
-    wishText.textContent = `Happy Raksha Bandhan ${userName} Garu❤️`;
+    wishText.textContent = `Happy Raksha Bandhan ${userName} garu ❤️`;
     wishText.classList.add("show");
   }, 4400);
 
@@ -202,6 +202,11 @@ document.querySelectorAll(".reaction-btn").forEach((btn) => {
 document.getElementById("btn-feedback-page").addEventListener("click", () => {
   goToScreen("screen8");
   fadeOutMusic();
+});
+
+/* ---------- Screen 8 -> Screen 9 (Flower & Spider) ---------- */
+document.getElementById("btn-flower-spider").addEventListener("click", () => {
+  goToScreen("screen9");
 });
 
 /* ---------- Music fadeout ---------- */
