@@ -99,7 +99,7 @@ function runHeroSequence() {
 
   // 3) wish text appears
   setTimeout(() => {
-    wishText.textContent = `Happy Raksha Bandhan ${userName} Garu💐`;
+    wishText.textContent = `Happy Raksha Bandhan ${userName} Garu❤️`;
     wishText.classList.add("show");
   }, 4400);
 
